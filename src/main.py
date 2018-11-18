@@ -6,12 +6,12 @@ DB_NAME = 'news'
 def most_popular_articles():
     db = psycopg2.connect(database=DB_NAME)
     c = db.cursor()
-    c.execute("SELECT articles.title, count(*) as views"
-              "FROM log INNER JOIN articles"
-              "ON log.path LIKE CONCAT('%', articles.slug, '%')"
-              "GROUP BY articles.title"
-              "ORDER BY views DESC"
-              "LIMIT 3;")
+    c.execute("SELECT articles.title, count(*) as views "
+              "FROM log INNER JOIN articles "
+              "ON log.path LIKE CONCAT('%', articles.slug, '%') "
+              "GROUP BY articles.title "
+              "ORDER BY views DESC "
+              "LIMIT 3 ")
     articles = c.fetchall()
     db.close()
     return articles
@@ -49,14 +49,16 @@ def print_info():
 if __name__ == '__main__':
 
     while True:
+
         print_info()
+        question_number = int(input())
+        is_valid = 1 <= question_number <= 3
+        if is_valid:
+            find_answer(question_number)
+        else:
+            break
 
         try:
-            question_number = int(input())
-            is_valid = 1 <= question_number <= 3
-            if is_valid:
-                find_answer(question_number)
-            else:
-                break
+            pass
         except:
             break
