@@ -1,5 +1,20 @@
+import psycopg2
+
+DB_NAME = 'news'
+
+
 def most_popular_articles():
-    return {}
+    db = psycopg2.connect(database=DB_NAME)
+    c = db.cursor()
+    c.execute("SELECT articles.title, count(*) as views"
+              "FROM log INNER JOIN articles"
+              "ON log.path LIKE CONCAT('%', articles.slug, '%')"
+              "GROUP BY articles.title"
+              "ORDER BY views DESC"
+              "LIMIT 3;")
+    articles = c.fetchall()
+    db.close()
+    return articles
 
 
 def most_popular_authors():
@@ -10,7 +25,7 @@ def more_than_percent_error():
     return {}
 
 
-def find_answer(question_number: int):
+def find_answer(question_number):
     answer = {}
 
     if question_number == 1:
