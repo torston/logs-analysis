@@ -11,18 +11,42 @@ def most_popular_articles():
               "ON log.path LIKE CONCAT('%', articles.slug, '%') "
               "GROUP BY articles.title "
               "ORDER BY views DESC "
-              "LIMIT 3 ")
+              "LIMIT 3")
     articles = c.fetchall()
     db.close()
     return articles
 
 
 def most_popular_authors():
-    return {}
+    db = psycopg2.connect(database=DB_NAME)
+    c = db.cursor()
+    c.execute("SELECT name, count(*) as views "
+              "FROM log INNER JOIN (SELECT articles.slug, articles.title, authors.name "
+              "FROM articles JOIN authors "
+              "ON articles.author = authors.id) as authors_articles "
+              "ON log.path LIKE CONCAT('%', authors_articles.slug, '%') "
+              "GROUP BY name "
+              "ORDER BY views DESC")
+    authors = c.fetchall()
+    db.close()
+    return authors
 
 
 def more_than_percent_error():
-    return {}
+    db = psycopg2.connect(database=DB_NAME)
+    c = db.cursor()
+    c.execute("SELECT (log.time::date), ROUND((bad.c::decimal / count(*)::decimal) * 100, 1) AS percent "
+              "FROM "
+              "log JOIN "
+              "(select (time::date), count(*) AS c "
+              "FROM log WHERE status NOT LIKE '200%' "
+              "GROUP BY (time::date)) AS bad "
+              "ON (log.time::date) = bad.time "
+              "GROUP BY (log.time::date), bad.c "
+              "HAVING ROUND((bad.c::decimal / count(*)::decimal) * 100, 1) >= 1")
+    errors = c.fetchall()
+    db.close()
+    return errors
 
 
 def find_answer(question_number):
