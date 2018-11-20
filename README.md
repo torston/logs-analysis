@@ -24,7 +24,7 @@ Put the question number or anything else to exit application.
 Enter question number:1
 
 Answer:
-"Candidate is jerk, alleges rival" - 342102 views
-"Bears love berries, alleges bear" - 256365 views
-"Bad things gone, say good people" - 171762 views
+"Candidate is jerk, alleges rival" - 338647 views
+"Bears love berries, alleges bear" - 253801 views
+"Bad things gone, say good people" - 170098 views
 ```

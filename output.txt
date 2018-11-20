@@ -7,9 +7,9 @@ Put the question number or anything else to exit application.
 Enter question number:1
 
 Answer:
-"Candidate is jerk, alleges rival" - 342102 views
-"Bears love berries, alleges bear" - 256365 views
-"Bad things gone, say good people" - 171762 views
+"Candidate is jerk, alleges rival" - 338647 views
+"Bears love berries, alleges bear" - 253801 views
+"Bad things gone, say good people" - 170098 views
 
 1: What are the most popular three articles of all time?
 2: Who are the most popular article authors of all time?
@@ -19,10 +19,10 @@ Put the question number or anything else to exit application.
 Enter question number:2
 
 Answer:
-Ursula La Multa - 512805 views
-Rudolf von Treppenwitz - 427781 views
-Anonymous Contributor - 171762 views
-Markoff Chaney - 85387 views
+Ursula La Multa - 507594 views
+Rudolf von Treppenwitz - 423457 views
+Anonymous Contributor - 170098 views
+Markoff Chaney - 84557 views
 
 1: What are the most popular three articles of all time?
 2: Who are the most popular article authors of all time?
@@ -32,7 +32,7 @@ Put the question number or anything else to exit application.
 Enter question number:3
 
 Answer:
-July 17,2016 - 2.3% errors
+Jul 17, 2016 - 2.3% errors
 
 1: What are the most popular three articles of all time?
 2: Who are the most popular article authors of all time?
