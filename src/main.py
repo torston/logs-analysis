@@ -9,7 +9,7 @@ def most_popular_articles():
     articles = query_db("""
         SELECT articles.title, count(*) as views 
         FROM log INNER JOIN articles 
-        ON log.path LIKE CONCAT('%', articles.slug, '%') 
+        ON log.path = CONCAT('/article/', articles.slug) 
         GROUP BY articles.title 
         ORDER BY views DESC 
         LIMIT 3
@@ -26,7 +26,7 @@ def most_popular_authors():
         (SELECT articles.slug, articles.title, authors.name 
         FROM articles JOIN authors 
         ON articles.author = authors.id) as authors_articles 
-        ON log.path LIKE CONCAT('%', authors_articles.slug, '%') 
+        ON log.path = CONCAT('/article/', authors_articles.slug) 
         GROUP BY name 
         ORDER BY views DESC
         """
@@ -37,17 +37,17 @@ def most_popular_authors():
 
 def more_than_percent_error():
     errors = query_db("""
-        SELECT time::date, 
-        count(CASE WHEN status !=  '200 OK' THEN 1 END) * 100 
-        / count(status)::float as percent 
+        SELECT TO_CHAR(time::date,'Mon DD, YYYY'),
+        round((count(CASE WHEN status !=  '200 OK' THEN 1 END) * 100 
+        / count(status)::decimal), 1) as percent 
         FROM log 
         GROUP BY time::date 
         having count(CASE WHEN status !=  '200 OK' THEN 1 END) * 100 
-        / count(status)::float >= 1"
+        / count(status)::decimal >= 1
         """
     )
 
-    return errors, '{0:%B %d,%Y} - {1:.1f}% errors'
+    return errors, '{0} - {1}% errors'
 
 
 def query_db(query):
