@@ -37,13 +37,13 @@ def most_popular_authors():
 
 def more_than_percent_error():
     errors = query_db("""
-        SELECT TO_CHAR(time::date,'Mon DD, YYYY'),
+        SELECT TO_CHAR(time::date,'FMMonth DD, YYYY'),
         round((count(CASE WHEN status !=  '200 OK' THEN 1 END) * 100 
-        / count(status)::decimal), 1) as percent 
+        / count(status)::numeric), 1) as percent 
         FROM log 
         GROUP BY time::date 
         having count(CASE WHEN status !=  '200 OK' THEN 1 END) * 100 
-        / count(status)::decimal >= 1
+        / count(status)::numeric >= 1
         """
     )
 
@@ -101,5 +101,6 @@ if __name__ == '__main__':
                 find_answer(question_number)
             else:
                 break
-        except Exception:
+        except Exception as e:
+            print(e)
             break
